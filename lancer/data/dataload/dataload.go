@@ -19,9 +19,9 @@ import (
 	MechType []string `json:"mechtype"`
 	Specialty bool `json:"specialty"` //| IPrerequisite // revisit adding IPrerequisite struct for outputting homebrew
 	Description string `json:"description"`
-	Mounts []int `json:"mounts"`
+	Mounts []string `json:"mounts"`
 	Stats FrameStats `json:"stats"`
-	Traits []FraimTraits `json:"traits"`
+	Traits []FrameTraits `json:"traits"`
 	CoreSystem CoreSystemData `json:"core_system"`
 	ImageURL string `json:"image_url"?` //shouldn't be necessary currently
 	YPOS float32 `json:"y_pos"?` // used for vertical alignment of the mech in banner views (like in the new mech selector)
@@ -44,11 +44,11 @@ import (
 	SP int `json:"sp"`
   }
 
-  type FraimTraits struct{
+  type FrameTraits struct{
 	Name string `json:"name"`
 	Description string `json:"description"` // v-html
 	UseFreq string `json:"use"?` //options include 'Turn' | 'Next Turn' | 'Round' | 'Next Round' | 'Scene' | 'Encounter' | 'Mission',
-	IActions []string `json:"actions"?`  //IActionData[],
+	IActions []IActionData `json:"actions"?`  //IActionData[],
 	Bonuses []IBonusData `json:"bonuses"?`
 	Synergies []ISynergyData `json:"synergies"?`
 	Deployabales []IDeployableData `json:"deployables"?`
@@ -61,9 +61,9 @@ import (
 	Name string `json:"name"`
 	ActiveName string `json:"active_name"`
 	ActiveEffect string `json:"active_effect"` // v-html
-	Activation ActivationType `json:"activation"`
+	Activation string `json:"activation"`
 	Description string `json:"description"?` // v-html
-	Deactivation ActivationType `json:"deactivation"?`
+	Deactivation string `json:"deactivation"?`
 	UseFreq string `json:"use"?` // 'Round' | 'Next Round' | 'Scene' | 'Encounter' | 'Mission',
 	ActiveActions []IActionData `json:"active_actions"?`
 	ActiveBonuses []IBonusData `jason:"active_bonuses"?`
@@ -71,7 +71,7 @@ import (
 	PassiveName string `json:"passive_name"?`
 	PassiveEffect string `json:"passive_effect"?` // v-html,
 	PassiveActions []IActionData `json:"passive_actions"?`
-	PassiveBonuses []IActionData `json:"passive_bonuses"?`
+	PassiveBonuses []IBonusData `json:"passive_bonuses"?`
 	PassiveSynergies []ISynergyData `json:"passive_synergies"`
 	Deployables []IDeployableData `json:"deployables"?`
 	Counter []ICounterData `json:"counters"?`
@@ -93,13 +93,14 @@ import (
 
   type IBonusData struct{
 	ID string `json:"id"`
-	Val string `json:"val"`
+	Val interface{} `json:"val"`
 	DamageTypes []string `json:"damage_types"?` //damage type values from array?
 	RangeTypes []string `json:"range_types"?` //same as DamageTypes
 	WeaponTypes []string `json:"weapon_types"?` //same as above
 	WeaponSizes []string `json:"weapon_sizes"?`
 	Overwrite bool `json:"overwrite"?`
 	Replace bool `json:"replace"?`
+	Traits []FrameTraits `json:"traits"`
   }
 
   type ISynergyData struct{
@@ -115,10 +116,10 @@ import (
 	UIType string `json:"type"` // this is for UI furnishing only
 	Detail string `json:"detail"`
 	Size int `json:"size"` // not required for Mines
-	Activation ActivationType `json:"activation"?`
-	Deactivation ActivationType `json:"deactivation"?`
-	Recall ActivationType `json:"recall"?`
-	Redeploy ActivationType `json:"redeploy"?`
+	Activation string `json:"activation"?`
+	Deactivation string `json:"deactivation"?`
+	Recall string `json:"recall"?`
+	Redeploy string `json:"redeploy"?`
 	Instances int `json:"instances"?`
 	Cost int `json:"cost"?`
 	Armor int `json:"armor"?`
@@ -170,7 +171,7 @@ import (
   }
 
   type FramesList struct{
-	AllFrames []Frame `json:"frames"`
+	AllFrames Frame `json:"frames"`
   }
   
   /*func load() {
@@ -218,11 +219,15 @@ import (
 	  log.Fatalf("Error reading file: %v", err)
 	}
 
-	var AllFramesTest FramesList
+	var AllFramesTest []Frame
 
 	err = json.Unmarshal(content, &AllFramesTest)
 
-	currentFrame := AllFramesTest.AllFrames[0]
+	if err != nil{
+		log.Fatalf("Error unmarshalling data:  %v", err)
+	}
+
+	currentFrame := AllFramesTest[0]
 	fmt.Println("ID: "+currentFrame.ID)
 	fmt.Println("Name: "+currentFrame.Name)
 	fmt.Println("Description: "+currentFrame.Description)
