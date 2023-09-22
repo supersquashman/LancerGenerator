@@ -43,7 +43,7 @@ package dataload
 	IActions []IActionData `json:"actions"?`  //IActionData[],
 	Bonuses []IBonusData `json:"bonuses"?`
 	Synergies []ISynergyData `json:"synergies"?`
-	Deployabales []IDeployableData `json:"deployables"?`
+	Deployables []IDeployableData `json:"deployables"?`
 	Counters []ICounterData `json:"counters"?`
 	Integrated []string `json:"integrated"?` //It is possible to "chain" equipment through integrated arrays, and is therefore possible to loop infinitely, which will cause the app to crash. Keep this in mind when building LCPs.
 	SpecialEquipment []string `json:"special_equipment"?`
@@ -150,6 +150,70 @@ package dataload
   	Val string `json:"val"`
   }
 
+  type IRangeData struct{
+	Type string `json:"type"`
+	Val int `json:"val"`
+  }
+
+  type IDamageData struct{
+	Type string `json:"type"`
+	Val int `json:"val"`
+  }
+
+  type Weapon struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Source string `json:"source"` // must be the same as the Manufacturer ID to sort correctly
+	License string `json:"license"` // reference to the Frame name of the associated license
+	LicenseID string `json:"license_id"` // reference to the Frame id of the associated license
+	LicenseLevel int `json:"license_level"` // set to zero for this item to be available to a LL0 character
+	Mount string `json:"mount"` // MountType ?? enum array eventually maybe
+	Type string `json:"type"` //  WeaponType ?? enum array eventually maybe?
+	Cost int `json:"cost"?`
+	Barrage bool `json:"barrage"?`
+	Skirmish bool `json:"skirmish"?`
+	NoAttack bool `json:"no_attack"?`
+	NoMods bool `json:"no_mods"?`
+	NoCoreBonus bool `json:"no_core_bonus"?`
+	Damage []IDamageData `json:"damage"?`
+	Range IRangeData `json:"range"?`
+	Tags ITagData `json:"tags"?`
+	SP int `json:"sp"?`
+	Description string `json:"description"` // v-html
+	Effect string `json:"effect"?` // v-html
+	OnAttack string `json:"on_attack"?`
+	OnHit string `json:"on_hit"?`
+	OnCrit string `json:on_crit"?`
+	Actions []IActionData `json:"actions"?`
+	Bonuses []IBonusData `json:"bonuses"?`
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?`
+	Counters []ICounterData `json:"counters"?`
+	Integrated []string `json:"integrated"?`
+	SpecialEquipment []string `json:"special_equipment"?`
+	Profiles []IWeaponProfile `json:"profiles"?` 
+  }
+
+  type IWeaponProfile struct{
+	Name string `json:"name"`
+	Effect string `json:"effect"?`
+	Skirmish bool `json:"skirmish"?`
+	Barrage bool `json:"barrage"?`
+	Cost int `json:"cost"?`
+	OnAttack string `json:"on_attack"?`
+	OnHit string `json:"on_hit"?`
+	OnCrit string `json:on_crit"?`
+	Damage []IDamageData `json:"damage"?`
+	Range []IRangeData `json:"range"?`
+	Actions []IActionData `json:"actions"?`
+	Bonuses []IBonusData `json:"bonuses"?`
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?`
+	Counters []ICounterData `json:"counters"?`
+	Integrated []string `json:"integrated"?`
+	SpecialEquipment []string `json:"special_equipment"?`
+  }
+
   type WeaponTypeData struct{
 	//enum array
   }
@@ -161,6 +225,22 @@ package dataload
   type SystemTypeData struct{
 	//enum array eventually
   }
+
+  type PilotGear struct{
+	ID string `json:"id"`
+	Name string `json:"name"` // v-html
+	Type string `json:"type"` // "Weapon" || "Armor" || "Gear"
+	Description string `json:"description"?`
+	Tags []ITagData `json:"tags"?`
+	Range []IRangeData `json:"range"?`
+	Damage []IDamageData `json:"damage"?` 
+	Actions []IActionData `json:"actions"?` // these are only available to UNMOUNTED pilots
+	Bonuses []IBonusData `json:"bonuses"?` // these bonuses are applied to the pilot, not parent system
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?` // these are only available to UNMOUNTED pilots
+  }
+
+
 
   type FramesList struct{
 	AllFrames Frame `json:"frames"`
