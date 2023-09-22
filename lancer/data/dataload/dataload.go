@@ -10,14 +10,17 @@ import (
 
   var AllFramesList []Frame
   var AllPilotGearList []PilotGear
-  var AllWeaponList []Weapon
+  var AllWeaponsList []Weapon
+  var AllSystemsList []System
+  var AllTalentsList []Talent
+  var AllReservesList []Reserves
 
   const dFRAME = "frame"
-  const dSYSTEM = "system" //to-do
+  const dSYSTEM = "system"
   const dPILOTGEAR = "pilotgear"
   const dWEAPON = "weapon"
-  const dTALENT = "talent" //to-do
-  const dRESERVE = "reserve" //to-do
+  const dTALENT = "talent"
+  const dRESERVE = "reserve"
   const dSITREP = "sitrep" //to-do
   const dSKILLTRIGGER = "skilltrigger" //to-do
   const dSTATUS = "status" //to-do
@@ -86,14 +89,41 @@ import (
 
 			AllPilotGearList = append(AllPilotGearList[:len(AllPilotGearList):len(AllPilotGearList)],tempPilotGearList...)
 		case dWEAPON:
-			var tempWeaponList []Weapon
+			var tempWeaponsList []Weapon
 
-			err = json.Unmarshal(content, &tempWeaponList)
+			err = json.Unmarshal(content, &tempWeaponsList)
 			if err != nil{
 				log.Fatalf("Error unmarshalling data:  %v", err)
 			}
 
-			AllWeaponList = append(AllWeaponList[:len(AllWeaponList):len(AllWeaponList)],tempWeaponList...)
+			AllWeaponsList = append(AllWeaponsList[:len(AllWeaponsList):len(AllWeaponsList)],tempWeaponsList...)
+		case dSYSTEM:
+			var tempSystemsList []System
+
+			err = json.Unmarshal(content, &tempSystemsList)
+			if err != nil{
+				log.Fatalf("Error unmarshalling data:  %v", err)
+			}
+
+			AllSystemsList = append(AllSystemsList[:len(AllSystemsList):len(AllSystemsList)],tempSystemsList...)
+		case dRESERVE:
+			var tempReservesList []Reserves
+
+			err = json.Unmarshal(content, &tempReservesList)
+			if err != nil{
+				log.Fatalf("Error unmarshalling data:  %v", err)
+			}
+
+			AllReservesList = append(AllReservesList[:len(AllReservesList):len(AllReservesList)],tempReservesList...)
+		case dTALENT:
+			var tempTalentsList []Talent
+
+			err = json.Unmarshal(content, &tempTalentsList)
+			if err != nil{
+				log.Fatalf("Error unmarshalling data:  %v", err)
+			}
+
+			AllTalentsList = append(AllTalentsList[:len(AllTalentsList):len(AllTalentsList)],tempTalentsList...)
 	}
 
   }

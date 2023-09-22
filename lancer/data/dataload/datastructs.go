@@ -214,6 +214,43 @@ package dataload
 	SpecialEquipment []string `json:"special_equipment"?`
   }
 
+  type System struct{
+	ID string `json:"id"`
+    Name string `json:"name"`
+    Source string `json:"source"` // must be the same as the Manufacturer ID to sort correctly
+    License string `json:"license"` // reference to the Frame name of the associated license
+    LicenseID string `json:"license_id"` // reference to the Frame id of the associated license
+    LicenseLevel int `json:"license_level"` // set to zero for this item to be available to a LL0 character
+    Effect string `json:"effect"?` // v-html
+    Type string `json:"type"?` //SystemType....enum eventually?
+    SP int `json:"sp"?`
+    Description string `json:"description"?` // v-html
+    Tags ITagData `json:"tags"?`
+    Actions []IActionData `json:"actions"?`
+    Bonuses []IBonusData `json:"bonuses"?`
+    Synergies []ISynergyData `json:"synergies"?`
+    Deployables []IDeployableData `json:"deployables"?`
+    Counters []ICounterData `json:"counters"?`
+    Integrated []string `json:"integrated"?`
+    SpecialEquipment []string `json:"special_equipment"?`
+  }
+
+  type Reserves struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"` //"Mech" | "Tactical" | "Resource" | "Bonus",
+	Label string `json:"label"`
+	Description string `json:"description"?` // v-html
+	Consumable bool `json:"consumable"?`// defaults to false
+	Actions []IActionData `json:"actions"?`
+	Bonuses []IBonusData `json:"bonuses"?`
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?`
+	Counter []ICounterData `json:"counters"?`
+	Integrated []string `json:"integrated"?`
+	SpecialEquipment []string `json:"special_equipment"?`
+  }
+
   type WeaponTypeData struct{
 	//enum array
   }
@@ -238,6 +275,27 @@ package dataload
 	Bonuses []IBonusData `json:"bonuses"?` // these bonuses are applied to the pilot, not parent system
 	Synergies []ISynergyData `json:"synergies"?`
 	Deployables []IDeployableData `json:"deployables"?` // these are only available to UNMOUNTED pilots
+  }
+
+  type Talent struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Description string `json:"description"` // v-html
+	Ranks []IRankData `json:"ranks"`
+	IconURL string `json:"icon_url"?`// Must be .svg
+	Terse string `json:"terse"?` // terse text used in short descriptions. The fewer characters the better
+  }
+
+  type IRankData struct{
+	Name string `json:"name"`
+	Description string `json:"description"` // v-html
+	Exclusing bool `json:"exclusive"?` // see below
+	Actions []IActionData `json:"actions"?`
+	Bonuses []IBonusData `json:"bonuses"?`
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?`
+	Counter []ICounterData `json:"counters"?`
+	Integrated []string `json:"integrated"?`
   }
 
 
