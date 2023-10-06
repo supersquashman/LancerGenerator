@@ -2,7 +2,6 @@ package dataload
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -27,12 +26,6 @@ import (
 
   func Load_Frames(path string){
 	file_load(path, dFRAME)
-
-	currentFrame := AllFramesList[0]
-	fmt.Println("ID: "+currentFrame.ID)
-	fmt.Println("Name: "+currentFrame.Name)
-	fmt.Println("Description: "+currentFrame.Description)
-
   }
 
   func Load_PilotGear(path string){

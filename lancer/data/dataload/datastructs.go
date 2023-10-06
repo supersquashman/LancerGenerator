@@ -6,7 +6,7 @@ package dataload
 	LicenseLevel int `json:"licence_level"`
 	LiscenceID string `json:"license_id"`
 	Variant string `json:"variant"`
-	Source string `"jsonc:source"`
+	Source string `"jsonc:source"` //manufacturer
 	Name string `json:"name"`
 	MechType []string `json:"mechtype"`
 	Specialty bool `json:"specialty"` //| IPrerequisite // revisit adding IPrerequisite struct for outputting homebrew
@@ -77,7 +77,7 @@ package dataload
 	Activation string `json:"activation"` //ActivationType,
 	Detail string `json:"detail"` // v-html
 	Cost int `json:"cost"?`
-	Pilot bool `json:"pilot"?`
+	PilotUsable bool `json:"pilot"?`
 	SynergyLocations []string `json:"synergy_locations"?`
 	TechAttack bool `json:"tech_attack"?`
 	Log []string `json:"log"?`
@@ -124,7 +124,7 @@ package dataload
 	TechAttack int `json:"tech_attack"?`
 	Save int `json:"save"?`
 	Speed int `json:"speed"?`
-	Pilot bool `json:"pilot"?`
+	PilotUsable bool `json:"pilot"?`
 	Mech bool `json:"mech"?`
 	Actions []IActionData `json:"actions"?`
 	Bonuses []IBonusData `json:"bonuses"?`
@@ -235,6 +235,136 @@ package dataload
     SpecialEquipment []string `json:"special_equipment"?`
   }
 
+  type ICoreBonus struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Source string `json:"source"` // must be the same as the Manufacturer ID to sort correctly
+	Effect string `json:"effect"` // v-html
+	Description string `json:"description"` // v-html
+	MountedEffect string `json:"mounted_effect"?`
+	Actions []IActionData `json:"actions"?`
+	Bonuses []IBonusData `json:"bonuses"?`
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?`
+	Counters []ICounterData `json:"counters"?`
+	Integrated []string `json:"integrated"?`
+	SpecialEquipment []string `json:"special_equipment"?`
+  }
+
+  type Mech struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Notes string `json:"notes"`
+	GMNotes string `json:"gm_note"`
+	Frame string `json:"frame"`
+	Active bool `json:"active"`
+	CurrentStructure int `json:"current_structure"`
+	CurrentMove int `json:"current_move"`
+	Boost int `json:"boost"`
+	CurrentHP int `json:"current_hp"`
+	Overshield int `json:"overshield"`
+	CurrentStress int `json:"current_stress"`
+	CurrentHeat int `json:"current_heat"`
+	CurrentRepairs int `json:"current_repairs"`
+	CurrentOvercharge int `json:"current_overcharge"`
+	CurrentCoreEnergy int `json:"current_core_energy"`
+	Statuses []string `json:"statuses"`
+	Conditions []string `json:"conditions"`
+	Resistances []string `json:"resistances"`
+	Reactions []string `json:"reactions"`
+	Burn int `json:"burn"`
+	Destroyed bool `json:"destroyed"`
+	Defeat string `json:"defeat"`
+	Activations int `json:"activations"`
+	MeltdownImminent bool `json:"meltdown_imminent"`
+	ReactorDestroyed bool `json:"reactor_destroyed"`
+	CoreActive bool `json:"core_active"`
+	CCVer string `json:"cc_ver"`
+	LastModified string `json:"lastModified"`
+	IsDeleted bool `json:"isDeleted"`
+	ExpireTime string `json:"expireTime"`
+	DeleteTime string `json:"delteTime"`
+	Portrait string `json:"portrait"`
+	CloudPortrait string `json:"cloud_portrait"`
+	Loadouts []Loadout `json:"loadouts"`
+	ActiveLoadoutIndex int `json:"active_loadout_index"`
+  }
+
+  type Loadout struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Systems []SystemInstance `json:"systems"`
+	IntegratedSystems []SystemInstance `json:"integratedSystems"`
+	Mounts []Mount `json:"mounts"`
+	IntegratedMounts []Mount `json:"integratedMounts"`
+	ImprovedArmament []Mount `json:"improved_armament"`
+	SuperHeavyMounting []Mount `json:"superheavy_mounting"`
+	IntegratedWeapon []Mount `json:"integratedWeapon"`
+  }
+
+  type Mount struct{
+	MountType string `json:"mount_type"`
+	Lock bool `json:"lock"`
+	Slots []MountSlot `json:"slots"`
+  }
+
+  type MountSlot struct{
+	Size string `json:"size"`
+	Weapon WeaponInstance `json:"weapon"`
+	Extra []string `json:"extra"`
+	BonusEffects []string `json:"bonus_effects"`
+  }
+
+  type SystemInstance struct{
+	ID string `json:"id"`
+	Uses int `json:"uses"`
+	Destroyed bool `json:"destroyed"`
+	Cascading bool `json:"cascading"`
+	FlavorName string `json:"flavorName"`
+	FlavorDescription string `json:"flavorDescription"`
+  }
+  
+  type WeaponInstance struct{
+	ID string `json:"id"`
+	Destroyed bool `json:"destroyed"`
+	Cascading bool `json:"cascading"`
+	Loaded bool `json:"loaded"`
+	Mod Mod `json:"mod"`
+	FlavorName string `json:"flavorName"`
+	FlavorDescription string `json:"flavorDescription"`
+	CustomDamageType string `json:"customDamageType"`
+	MaxUseOverride int `json:"maxUseOverride"`
+	Uses int `json:"uses"`
+	SelectedProfile int `json:"selectedProfile"`
+  }
+
+  type Mod struct{
+	ID string `json:"id"`
+	Name string `json:"name"`
+	Source string `json:"source"` // Manufacturer ID
+	License string `json:"license"` // Frame Name
+	LicenseID string `json:"license_id"` // reference to the Frame id of the associated license
+	LicenseLevel int `json:"license_level"` // set to 0 to be available to all Pilots
+	SP int `json:"sp"?`
+	Description string `json:"description"?` // v-html
+	Effect string `json:"effect"?` // v-html
+	Tags []ITagData `json:"tags"?` // tags related to the mod itself
+	AllowedTypes []string `json:"allowed_types"?` // weapon types the mod CAN be applied to
+	AllowedSizes []string `json:"allowed_sizes"?` // weapon sizes the mod CAN be applied to
+	RestrictedTypes []string `json:"restricted_types"?` // weapon types the mod CAN NOT be applied to
+	RestrictedSizes []string `json:"restricted_sizes"?` // weapon sizes the mod CAN NOT be applied to
+	AddedTags []ITagData `json:"added_tags"?` // tags propagated to the weapon the mod is installed on
+	AddedDamage []IDamageData `json:"added_damage"?` // damage added to the weapon the mod is installed on, see note
+	AddedRange []IRangeData `json:"added_range"?` // damage added to the weapon the mod is installed on, see note
+	Actions []IActionData `json:"actions"?`
+	Bonuses []IBonusData `json:"bonuses"?` // these bonuses are applied to the pilot, not parent weapon
+	Synergies []ISynergyData `json:"synergies"?`
+	Deployables []IDeployableData `json:"deployables"?`
+	Counter []ICounterData `json:"counters"?`
+	Integrated []string `json:"integrated"?`
+	SpecialEquipment []string `json:"special_equipment"?`
+  }
+
   type Reserves struct{
 	ID string `json:"id"`
 	Name string `json:"name"`
@@ -261,20 +391,6 @@ package dataload
 
   type SystemTypeData struct{
 	//enum array eventually
-  }
-
-  type PilotGear struct{
-	ID string `json:"id"`
-	Name string `json:"name"` // v-html
-	Type string `json:"type"` // "Weapon" || "Armor" || "Gear"
-	Description string `json:"description"?`
-	Tags []ITagData `json:"tags"?`
-	Range []IRangeData `json:"range"?`
-	Damage []IDamageData `json:"damage"?` 
-	Actions []IActionData `json:"actions"?` // these are only available to UNMOUNTED pilots
-	Bonuses []IBonusData `json:"bonuses"?` // these bonuses are applied to the pilot, not parent system
-	Synergies []ISynergyData `json:"synergies"?`
-	Deployables []IDeployableData `json:"deployables"?` // these are only available to UNMOUNTED pilots
   }
 
   type Talent struct{
