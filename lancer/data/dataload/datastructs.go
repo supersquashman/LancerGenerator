@@ -9,7 +9,7 @@ package dataload
 	Source string `"jsonc:source"` //manufacturer
 	Name string `json:"name"`
 	MechType []string `json:"mechtype"`
-	Specialty bool `json:"specialty"` //| IPrerequisite // revisit adding IPrerequisite struct for outputting homebrew
+	//Specialty bool `json:"specialty"` //| IPrerequisite // revisit adding IPrerequisite struct for outputting homebrew
 	Description string `json:"description"`
 	Mounts []string `json:"mounts"`
 	Stats FrameStats `json:"stats"`
@@ -20,7 +20,7 @@ package dataload
   }
 
   type FrameStats struct{
-	Size int `json:"size"`
+	Size float32 `json:"size"`
 	Structure int `json:"structure"`
 	Stress int `json:"stress"`
 	Armor int `json:"armor"`
@@ -107,7 +107,7 @@ package dataload
 	Name string `json:"name"`
 	UIType string `json:"type"` // this is for UI furnishing only
 	Detail string `json:"detail"`
-	Size int `json:"size"` // not required for Mines
+	Size float32 `json:"size"` // not required for Mines
 	Activation string `json:"activation"?`
 	Deactivation string `json:"deactivation"?`
 	Recall string `json:"recall"?`
@@ -115,7 +115,7 @@ package dataload
 	Instances int `json:"instances"?`
 	Cost int `json:"cost"?`
 	Armor int `json:"armor"?`
-	HP int `json:"hp"?`
+	HP int `json:"hp"`
 	Evasion int `json:"evasion"?`
 	Edef int `json:"edef"?`
 	HeatCap int `json:"heatcap"?`

@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	//"fmt"
+	//"strconv"
   )
 
   var AllFramesList []Frame
@@ -68,8 +70,12 @@ import (
 
 			err = json.Unmarshal(content, &tempFrameList)
 			if err != nil{
-				log.Fatalf("Error unmarshalling data:  %v", err)
+				//log.Fatalf("Error in file: %v", path)
+				//log.Fatalf("Error unmarshalling Frame data:  %v", err)
+				
 			}
+			//fmt.Println("frame list size = "+ strconv.Itoa(len(tempFrameList)))
+			//fmt.Println(tempFrameList[len(tempFrameList)-1].ID)
 
 			AllFramesList = append(AllFramesList[:len(AllFramesList):len(AllFramesList)],tempFrameList...)
 		case dPILOTGEAR:
@@ -77,7 +83,8 @@ import (
 
 			err = json.Unmarshal(content, &tempPilotGearList)
 			if err != nil{
-				log.Fatalf("Error unmarshalling data:  %v", err)
+				log.Fatalf("Error in file: %v", path)
+				log.Fatalf("Error unmarshalling Pilot data:  %v", err)
 			}
 
 			AllPilotGearList = append(AllPilotGearList[:len(AllPilotGearList):len(AllPilotGearList)],tempPilotGearList...)
@@ -86,7 +93,8 @@ import (
 
 			err = json.Unmarshal(content, &tempWeaponsList)
 			if err != nil{
-				log.Fatalf("Error unmarshalling data:  %v", err)
+				log.Fatalf("Error in file: %v", path)
+				log.Fatalf("Error unmarshalling Weapon data:  %v", err)
 			}
 
 			AllWeaponsList = append(AllWeaponsList[:len(AllWeaponsList):len(AllWeaponsList)],tempWeaponsList...)
@@ -95,7 +103,8 @@ import (
 
 			err = json.Unmarshal(content, &tempSystemsList)
 			if err != nil{
-				log.Fatalf("Error unmarshalling data:  %v", err)
+				log.Fatalf("Error in file: %v", path)
+				log.Fatalf("Error unmarshalling System data:  %v", err)
 			}
 
 			AllSystemsList = append(AllSystemsList[:len(AllSystemsList):len(AllSystemsList)],tempSystemsList...)
@@ -104,7 +113,8 @@ import (
 
 			err = json.Unmarshal(content, &tempReservesList)
 			if err != nil{
-				log.Fatalf("Error unmarshalling data:  %v", err)
+				log.Fatalf("Error in file: %v", path)
+				log.Fatalf("Error unmarshalling Reserve data:  %v", err)
 			}
 
 			AllReservesList = append(AllReservesList[:len(AllReservesList):len(AllReservesList)],tempReservesList...)
@@ -113,7 +123,8 @@ import (
 
 			err = json.Unmarshal(content, &tempTalentsList)
 			if err != nil{
-				log.Fatalf("Error unmarshalling data:  %v", err)
+				log.Fatalf("Error in file: %v", path)
+				log.Fatalf("Error unmarshalling Talent data:  %v", err)
 			}
 
 			AllTalentsList = append(AllTalentsList[:len(AllTalentsList):len(AllTalentsList)],tempTalentsList...)

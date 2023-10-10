@@ -10,7 +10,7 @@ import(
 func GenerateMech() Mech{
 	var newMech Mech
 	newMech.Frame = frames.GetRandomFrame()
-	newMech.Frame
+	//newMech.Frame
 	newMech.ColorScheme = "Flat grey of a newly printed mech"
 	return newMech
 }
