@@ -93,8 +93,8 @@ import (
 
 			err = json.Unmarshal(content, &tempWeaponsList)
 			if err != nil{
-				log.Fatalf("Error in file: %v", path)
-				log.Fatalf("Error unmarshalling Weapon data:  %v", err)
+				//log.Fatalf("Error in file: %v", path)
+				//log.Fatalf("Error unmarshalling Weapon data:  %v", err)
 			}
 
 			AllWeaponsList = append(AllWeaponsList[:len(AllWeaponsList):len(AllWeaponsList)],tempWeaponsList...)

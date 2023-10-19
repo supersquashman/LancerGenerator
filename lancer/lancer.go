@@ -6,7 +6,7 @@ import (
 )
 
 func main(){
-	dataload.Load_All_Frames()
+	dataload.Load_All()
 	
 	mech := mechs.GenerateMech()
 	mechs.ToString(mech)

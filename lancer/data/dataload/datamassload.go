@@ -14,7 +14,7 @@ func Load_All() {
 	//Load_All_Reserves()
 	//Load_All_Systems()
 	//Load_All_Talents()
-	//Load_All_Weapons()
+	Load_All_Weapons()
   }
 
 func Load_All_Frames(){
@@ -43,8 +43,8 @@ func Load_All_Talents(){
 }
 
 func Load_All_Weapons(){
-	//var compareVal = "weapons"
-	//load_all_base(Load_Weapons, compareVal)
+	var compareVal = "weapons"
+	load_all_base(Load_Weapons, compareVal)
 }
 
 func load_all_base(specFunc load_func, comparison string){
