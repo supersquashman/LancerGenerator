@@ -12,6 +12,8 @@ replace weapons => ./mechs/weapons
 
 replace mounts => ./mechs/mounts
 
+replace colorscheme => ./mechs/colorscheme
+
 replace core_stats => ./mechs/frames/core_stats
 
 replace core_powers => ./mechs/frames/core_powers
@@ -28,4 +30,5 @@ require (
 	mounts v0.0.0-00010101000000-000000000000 // indirect
 	traits v0.0.0-00010101000000-000000000000 // indirect
 	weapons v0.0.0-00010101000000-000000000000 // indirect
+	colorscheme v0.0.0-00010101000000-000000000000 // indirect
 )

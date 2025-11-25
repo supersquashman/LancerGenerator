@@ -7,6 +7,7 @@ import(
 	"fmt"
 	"strings"
 	"mounts"
+	"colorscheme"
 )
 
 func GenerateMech() Mech{
@@ -16,7 +17,8 @@ func GenerateMech() Mech{
 	//newMech.Weapons = weapons.GenerateWeaponsList(newMech.Frame.Mounts)
 	//newMech.Weapons, MountMap = weapons.FillMountsByWeaponType(newMech.Frame.Mounts)
 	newMech.Weapons, newMech.Mounts = weapons.FillMountsByWeaponType(newMech.Mounts)
-	newMech.ColorScheme = "Flat grey of a newly printed mech"
+	// newMech.ColorScheme = "Flat grey of a newly printed mech"
+	newMech.ColorScheme = colorscheme.GetRandomColorscheme()
 	return newMech
 }
 
