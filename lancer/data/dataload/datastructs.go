@@ -6,7 +6,7 @@ package dataload
 	LicenseLevel int `json:"licence_level"`
 	LiscenceID string `json:"license_id"`
 	Variant string `json:"variant"`
-	Source string `"jsonc:source"` //manufacturer
+	Source string `jsonc:"source"` //manufacturer
 	Name string `json:"name"`
 	MechType []string `json:"mechtype"`
 	//Specialty bool `json:"specialty"` //| IPrerequisite // revisit adding IPrerequisite struct for outputting homebrew
