@@ -1,16 +1,17 @@
 package mechs
 
-import(
-	"frames"
-	"dataload"
-	"weapons"
+import (
 	"fmt"
 	"strings"
-	"mounts"
-	"colorscheme"
+
+	"github.com/supersquashman/LancerGenerator/colorscheme"
+	"github.com/supersquashman/LancerGenerator/dataload"
+	"github.com/supersquashman/LancerGenerator/frames"
+	"github.com/supersquashman/LancerGenerator/mounts"
+	"github.com/supersquashman/LancerGenerator/weapons"
 )
 
-func GenerateMech() Mech{
+func GenerateMech() Mech {
 	var newMech Mech
 	newMech.Frame = frames.GetRandomFrame()
 	newMech.Mounts = initMountsGroup(newMech)
@@ -22,43 +23,42 @@ func GenerateMech() Mech{
 	return newMech
 }
 
-func ToString(mecho Mech){
+func ToString(mecho Mech) {
 	//frame
-		//manufacturer
-		//color scheme
-		//mounts
-			//main
-			//heavy
-			//aux
-		//core_system
-	fmt.Println("ID: " +mecho.Frame.ID)
-	fmt.Println("Name: " +mecho.Frame.Name)
-	fmt.Println("Manufacturer: "+mecho.Frame.Source)
-	fmt.Println("Color Scheme: "+mecho.ColorScheme)
-	fmt.Println("Mounts: " + strings.Join(mecho.Frame.Mounts,", "))
-	fmt.Println("Weapons: "+weapons.JoinWeapons(mecho.Weapons, ","))
-	for _, mount := range mecho.Mounts{
-		fmt.Println(mount.Type + " Mount: " + mounts.JoinWeapons(mount,","))
+	//manufacturer
+	//color scheme
+	//mounts
+	//main
+	//heavy
+	//aux
+	//core_system
+	fmt.Println("ID: " + mecho.Frame.ID)
+	fmt.Println("Name: " + mecho.Frame.Name)
+	fmt.Println("Manufacturer: " + mecho.Frame.Source)
+	fmt.Println("Color Scheme: " + mecho.ColorScheme)
+	fmt.Println("Mounts: " + strings.Join(mecho.Frame.Mounts, ", "))
+	fmt.Println("Weapons: " + weapons.JoinWeapons(mecho.Weapons, ","))
+	for _, mount := range mecho.Mounts {
+		fmt.Println(mount.Type + " Mount: " + mounts.JoinWeapons(mount, ","))
 	}
 	fmt.Println("Core System: ")
 	//fmt.Println("Description: " mecho.Frame.Description)
 }
 
-func initMountsGroup(mech Mech) []mounts.MountObject{
+func initMountsGroup(mech Mech) []mounts.MountObject {
 	var mountList []mounts.MountObject
 
-	for _, mType := range mech.Frame.Mounts{
+	for _, mType := range mech.Frame.Mounts {
 		mountList = append(mountList, mounts.NewMount(mType))
 	}
 
 	return mountList
 }
 
-type Mech struct{
-	Frame dataload.Frame
-	Weapons []dataload.Weapon
-	MountMap map[string][]dataload.Weapon
-	Mounts []mounts.MountObject
+type Mech struct {
+	Frame       dataload.Frame
+	Weapons     []dataload.Weapon
+	MountMap    map[string][]dataload.Weapon
+	Mounts      []mounts.MountObject
 	ColorScheme string
 }
-
