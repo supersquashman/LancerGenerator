@@ -27,7 +27,7 @@ type MountObject struct{
 }
 
 //Check if a mount has space for the weapon passed in
-func CanFit(mount MountObject, weapon dataload.Weapon) (bool, string){
+func CanFit(mount dataload.Mount, weapon dataload.Weapon) (bool, string){
 	itFits :=  false //slices.Contains(mount.AvailableSlots, weapon.Type)
 	slotList := mount.AvailableSlots
 	whichSlotCanFit := ""
@@ -90,28 +90,41 @@ func CanFit(mount MountObject, weapon dataload.Weapon) (bool, string){
 }
 
 //function to check if a mount is full not sure if needed, but still missing logic
-func IsFull(mount MountObject) bool{
+func IsFull(mount dataload.Mount) bool{
 	isFull := reflect.DeepEqual(mount.AvailableSlots, []string{""})
 
 	return isFull
 }
 
+
+//Function to intialize list of mounts based on avaliable mount type per mech
+func InitMountList( mountTypes []string) []dataload.Mount{
+	var mountList []dataload.Mount
+
+	for _, mType := range mountTypes{
+		mountList = append(mountList, NewMount(mType))
+	}
+
+	return mountList
+}
+
 //Function to verify if there is still space in a slot
-func IsEmpty(mount MountObject) bool{
+func IsEmpty(mount dataload.Mount) bool{
 	isEmpty := reflect.DeepEqual(mount.AvailableSlots, GetMountSlotsByType(mount.Type))
 
 	return isEmpty
 }
 
 //need to use this for general use to accomodate Superheavy's
-func AttachIfCanFit(mountList []MountObject, tempWeapon dataload.Weapon) (bool, []MountObject){
+// func AttachIfCanFit(mountList []MountObject, tempWeapon dataload.Weapon) (bool, []MountObject){
+func AttachIfCanFit(mountList []dataload.Mount, tempWeapon dataload.Weapon) (bool, []dataload.Mount){
 	attached := false
 
 	if (strings.ToLower(tempWeapon.Mount) == dSuperheavy){
 		freeHeavy := false
 		freeOther := false
-		var heavyMount MountObject
-		var otherMount MountObject
+		var heavyMount dataload.Mount
+		var otherMount dataload.Mount
 
 		for _, mount := range mountList{
 			if (IsEmpty(mount)){
@@ -184,8 +197,8 @@ func GetMountSlotsByType(mountType string, customSlots ...[]string) []string{
 }
 
 //function to initialize new mounts based on type
-func NewMount(mType string) MountObject{
-	var defMount MountObject
+func NewMount(mType string) dataload.Mount{
+	var defMount dataload.Mount
 
 	defMount.Type = mType
 	defMount.AvailableSlots = GetMountSlotsByType(mType)
@@ -210,7 +223,7 @@ func addSlot(slotList []string, newItem string) []string{
 }
 
 //function for formatting output of weapon names
-func JoinWeapons(containerMount MountObject, delim string) string{
+func JoinWeapons(containerMount dataload.Mount, delim string) string{
 	stringifyed := ""
 	weaponList := containerMount.Weapons
 

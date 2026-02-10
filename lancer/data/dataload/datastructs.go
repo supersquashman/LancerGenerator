@@ -1,22 +1,44 @@
 package dataload
 
  // Define a struct to hold the JSON data
- type Frame struct {
+ type FrameArchetype struct {
 	ID string `json:"id"`
 	LicenseLevel int `json:"licence_level"`
-	LiscenceID string `json:"license_id"`
+	LicenseID string `json:"license_id"`
 	Variant string `json:"variant"`
 	Source string `jsonc:"source"` //manufacturer
 	Name string `json:"name"`
 	MechType []string `json:"mechtype"`
 	//Specialty bool `json:"specialty"` //| IPrerequisite // revisit adding IPrerequisite struct for outputting homebrew
 	Description string `json:"description"`
-	Mounts []string `json:"mounts"`
+	Mounts []string //`json:"mounts"`
+	MountMap []Mount `json:"mounts"`
+	// TempMounts []string `json:"temp_mounts"` //remove
 	Stats FrameStats `json:"stats"`
 	Traits []FrameTraits `json:"traits"`
 	CoreSystem CoreSystemData `json:"core_system"`
 	ImageURL string `json:"image_url"?` //shouldn't be necessary currently
 	YPOS float32 `json:"y_pos"?` // used for vertical alignment of the mech in banner views (like in the new mech selector)
+  }
+
+  type Frame struct{
+	ID string `json:"id"`
+	LicenseLevel int `json:"licence_level"`
+	LicenseID string `json:"license_id"`
+	Variant string `json:"variant"`
+	Source string `jsonc:"source"` //manufacturer
+	Name string `json:"name"`
+	MechType []string `json:"mechtype"`
+	Description string `json:"description"`
+	MountMap []Mount `json:"mounts"`
+	MountList []string `json:"mount_list"`
+	Mounts []Mount //`json:"mounts"`
+	Stats FrameStats `json:"stats"`
+	Traits []FrameTraits `json:"traits"`
+	CoreSystem CoreSystemData `json:"core_system"`
+	ImageURL string `json:"image_url"?` //shouldn't be necessary currently
+	YPOS float32 `json:"y_pos"?` // used for vertical alignment of the mech in banner views (like in the new mech selector)
+	Weapons []Weapon
   }
 
   type FrameStats struct{
@@ -25,10 +47,10 @@ package dataload
 	Stress int `json:"stress"`
 	Armor int `json:"armor"`
 	HP int `json:"hp"`
-	Evaison int `json:"evasion"`
+	Evasion int `json:"evasion"`
 	Edef int `json:"edef"`
-	HeatCap int `json:"heatcap"`
-	RepairCap int `json:"repcap"`
+	HeatCap int `json:"heat_cap"`
+	RepairCap int `json:"repair_cap"`
 	SensorRange int `json:"sensor_range"`
 	TechAttack int `json:"tech_attack"`
 	Save int `json:"save"`
@@ -66,7 +88,7 @@ package dataload
 	PassiveBonuses []IBonusData `json:"passive_bonuses"?`
 	PassiveSynergies []ISynergyData `json:"passive_synergies"`
 	Deployables []IDeployableData `json:"deployables"?`
-	Counter []ICounterData `json:"counters"?`
+	Counters []ICounterData `json:"counters"?`
 	Integrated []string `json:"integrated"?`
 	SpecialEquipment []string `json:"special_equipment"?`
 	Tags []ITagData `json:"tags"?`
@@ -77,7 +99,7 @@ package dataload
 	Activation string `json:"activation"` //ActivationType,
 	Detail string `json:"detail"` // v-html
 	Cost int `json:"cost"?`
-	PilotUsable bool `json:"pilot"?`
+	PilotUsable bool `json:"pilot_usable"?`
 	SynergyLocations []string `json:"synergy_locations"?`
 	TechAttack bool `json:"tech_attack"?`
 	Log []string `json:"log"?`
@@ -105,7 +127,7 @@ package dataload
 
   type IDeployableData struct{
 	Name string `json:"name"`
-	UIType string `json:"type"` // this is for UI furnishing only
+	UIType string `json:"ui_type"` // this is for UI furnishing only
 	Detail string `json:"detail"`
 	Size float32 `json:"size"` // not required for Mines
 	Activation string `json:"activation"?`
@@ -118,13 +140,13 @@ package dataload
 	HP int `json:"hp"`
 	Evasion int `json:"evasion"?`
 	Edef int `json:"edef"?`
-	HeatCap int `json:"heatcap"?`
-	RepairCap int `json:"repcap"?`
+	HeatCap int `json:"heat_cap"?`
+	RepairCap int `json:"repair_cap"?`
 	SensorRange int `json:"sensor_range"?`
 	TechAttack int `json:"tech_attack"?`
 	Save int `json:"save"?`
 	Speed int `json:"speed"?`
-	PilotUsable bool `json:"pilot"?`
+	PilotUsable bool `json:"pilot_usable"?`
 	Mech bool `json:"mech"?`
 	Actions []IActionData `json:"actions"?`
 	Bonuses []IBonusData `json:"bonuses"?`
@@ -256,7 +278,7 @@ package dataload
 	Name string `json:"name"`
 	Notes string `json:"notes"`
 	GMNotes string `json:"gm_note"`
-	Frame string `json:"frame"`
+	Frame Frame `json:"frame"`
 	Active bool `json:"active"`
 	CurrentStructure int `json:"current_structure"`
 	CurrentMove int `json:"current_move"`
@@ -288,6 +310,8 @@ package dataload
 	CloudPortrait string `json:"cloud_portrait"`
 	Loadouts []Loadout `json:"loadouts"`
 	ActiveLoadoutIndex int `json:"active_loadout_index"`
+	ColorScheme string `json:"color_scheme"`
+	Weapons []Weapon `json:"weapons"`
   }
 
   type Loadout struct{
@@ -306,6 +330,9 @@ package dataload
 	MountType string `json:"mount_type"`
 	Lock bool `json:"lock"`
 	Slots []MountSlot `json:"slots"`
+	Type string
+	Weapons []Weapon
+	AvailableSlots []string
   }
 
   type MountSlot struct{

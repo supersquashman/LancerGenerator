@@ -74,7 +74,7 @@ func FillMountByType(mountType string) []dataload.Weapon{
 }
 
 //function to fill mounts based on a weapons-first approach
-func FillMountsByWeaponType(mountList []mounts.MountObject) ([]dataload.Weapon, []mounts.MountObject){
+func FillMountsByWeaponType(mountList []dataload.Mount) ([]dataload.Weapon, []dataload.Mount){
 	var tempWeapons []dataload.Weapon
 	tempMountList := mountList
 	

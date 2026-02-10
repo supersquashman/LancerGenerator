@@ -9,7 +9,7 @@ import (
 	//"strconv"
   )
 
-  var AllFramesList []Frame
+  var AllFramesList []FrameArchetype
   var AllPilotGearList []PilotGear
   var AllWeaponsList []Weapon
   var AllSystemsList []System
@@ -66,7 +66,7 @@ import (
 
 	switch dtype{
 		case dFRAME:
-			var tempFrameList []Frame
+			var tempFrameList []FrameArchetype
 
 			err = json.Unmarshal(content, &tempFrameList)
 			if err != nil{
