@@ -22,16 +22,15 @@ replace core_powers => ./mechs/frames/core_powers
 
 replace dataload => ./data/dataload
 
-require mechs v0.0.0-00010101000000-000000000000
+require (
+	dataload v0.0.0-00010101000000-000000000000
+	github.com/rs/cors v1.11.1
+	mechs v0.0.0-00010101000000-000000000000
+)
 
 require (
 	colorscheme v0.0.0-00010101000000-000000000000 // indirect
-	core_powers v0.0.0-00010101000000-000000000000 // indirect
-	core_stats v0.0.0-00010101000000-000000000000 // indirect
-	dataload v0.0.0-00010101000000-000000000000 // indirect
 	frames v0.0.0-00010101000000-000000000000 // indirect
-	github.com/rs/cors v1.11.1 // indirect
 	mounts v0.0.0-00010101000000-000000000000 // indirect
-	traits v0.0.0-00010101000000-000000000000 // indirect
 	weapons v0.0.0-00010101000000-000000000000 // indirect
 )
